@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Page;
 
 class Country extends Model
 {
@@ -11,4 +12,8 @@ class Country extends Model
   protected $fillable = [
     'name'
   ];
+
+  public function pages(){
+    return $this->hasMany(Page::class);
+  }
 }

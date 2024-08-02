@@ -10,7 +10,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Add Page</h1>
+                        <h1 class="m-0">Edit Page</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -38,15 +38,15 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="{{ route('add-page-post') }}" method="POST">
+                            <form action="{{ route('edit-page-post', ['id' => $page_data->id]) }}" method="POST">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>Country</label>
-                                        <select name="country_id" class="form-control">
+                                        <select name="country_id" class="form-control" >
                                             <option value="">please select</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country->id }}">
+                                                <option value="{{ $country->id }}" {{ $country->id == $page_data->country_id ? 'selected' : '' }}>
                                                     {{ $country->name }}
                                                 </option>
                                             @endforeach
@@ -55,54 +55,72 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Location</label>
-                                        <input type="text" name="location" class="form-control" placeholder="Enter ...">
+                                        <input type="text" name="location" class="form-control"
+                                            value="{{ $page_data->location }}" placeholder="Enter ...">
                                     </div>
                                     <div class="form-group">
                                         <label>Page Url</label>
-                                        <input type="text" name="page_url" class="form-control" placeholder="Enter ...">
+                                        <input type="text" name="page_url" value="{{ $page_data->page_url }}"
+                                            class="form-control" placeholder="Enter ...">
                                     </div>
                                     <div class="form-group">
                                         <label>Hero Title</label>
-                                        <input type="text" name="hero_title" class="form-control"
-                                            placeholder="Enter ...">
+                                        <input type="text" name="hero_title" value="{{ $page_data->hero_title }}"
+                                            class="form-control" placeholder="Enter ...">
                                     </div>
                                     <div class="form-group">
                                         <label>Hero Sub Title</label>
-                                        <input type="text" name="hero_sub_title" class="form-control"
-                                            placeholder="Enter ...">
+                                        <input type="text" name="hero_sub_title" value="{{ $page_data->hero_sub_title }}"
+                                            class="form-control" placeholder="Enter ...">
                                     </div>
                                     <hr />
                                     <div class="form-group">
                                         <label>Section 1 Title 1</label>
-                                        <input type="text" name="section_1_title_1" class="form-control"
+                                        <input type="text" name="section_1_title_1"
+                                            value="{{ $page_data->section_1_title_1 }}" class="form-control"
                                             placeholder="Enter ...">
                                     </div>
                                     <div class="form-group">
                                         <label>Section 1 Content 1</label>
-                                        <textarea class="form-control" name="section_1_content_1" rows="3" placeholder="Enter ..."></textarea>
+                                        <textarea class="form-control" name="section_1_content_1" rows="3"
+                                            placeholder="Enter ...">
+                                            {{ $page_data->section_1_content_1 }}
+                                        </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Section 1 Title 2</label>
-                                        <input type="text" name="section_1_title_2" class="form-control"
+                                        <input type="text" name="section_1_title_2"
+                                            value="{{ $page_data->section_1_title_2 }}" class="form-control"
                                             placeholder="Enter ...">
                                     </div>
                                     <div class="form-group">
                                         <label>Section 1 Content 2</label>
-                                        <textarea class="form-control" name="section_1_content_2" rows="3" placeholder="Enter ..."></textarea>
+                                        <textarea class="form-control" name="section_1_content_2" rows="3"
+                                            placeholder="Enter ...">
+                                            {{ $page_data->section_1_content_2 }}    
+                                        </textarea>
                                     </div>
                                     <hr />
                                     <div class="form-group">
                                         <label>Conference Pricing Text</label>
-                                        <textarea class="form-control" name="conference_pricing_text" id="summernote">
-                      Place <em>some</em> <u>text</u> <strong>here</strong>
-                    </textarea>
+                                        <textarea class="form-control" name="conference_pricing_text" value="" id="summernote">
+                                            @if ($page_data->conference_pricing_text)
+                                                {{ $page_data->conference_pricing_text }}
+                                            @else
+                                                Place <em>some</em> <u>text</u> <strong>here</strong>
+                                            @endif                                              
+                                        </textarea>
                                     </div>
                                     <hr />
                                     <div class="form-group">
                                         <label>Sponsor section Text</label>
                                         <textarea class="form-control" name="sponsor_section_text" id="summernote2">
-                      Place <em>some</em> <u>text</u> <strong>here</strong>
-                    </textarea>
+                                            @if ($page_data->sponsor_section_text)
+                                                {{ $page_data->sponsor_section_text }}
+                                            @else
+                                                Place <em>some</em> <u>text</u> <strong>here</strong>
+                                            @endif
+                                        </textarea>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -116,62 +134,6 @@
 
                     </div>
                     <!--/.col (left) -->
-                </div>
-                <!-- /.row -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Pages</h3>
-
-                                <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
-
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body table-responsive p-0">
-                                <table class="table table-hover text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Country Id</th>
-                                            <th>Location</th>
-                                            <th>Page Url</th>
-                                            <th>Hero Title</th>
-                                            <th>More</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($page_data as $data)
-                                            <tr>
-                                                <td>{{ $data->id }}</td>
-                                                <td>{{ $data->country->name }}</td>
-                                                <td>{{ $data->location }}</td>
-                                                <td>{{ $data->page_url }}</td>
-                                                <td>{{ $data->hero_title }}</td>
-                                                <td>
-                                                    <a href="{{ route('delete-page', ['id' => $data->id]) }}">delete</a>
-                                                    <a href="{{ route('edit-page', ['id' => $data->id]) }}">edit</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>

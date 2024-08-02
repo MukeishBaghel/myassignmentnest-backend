@@ -22,6 +22,13 @@ require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function(){
   Route::get('admin/add-page', [AdminController::class, 'addPage'])->name('add-page');
+  Route::post('admin/add-page', [AdminController::class, 'addPagePost'])->name('add-page-post');
+  Route::get('admin/edit-page/{id}', [AdminController::class, 'editPage'])->name('edit-page');
+  Route::post('admin/edit-page/{id}', [AdminController::class, 'editPagePost'])->name('edit-page-post');
+  Route::get('admin/delete-page/{id}', [AdminController::class, 'deletePage'])->name('delete-page');
   Route::get('admin/add-counties', [AdminController::class, 'addCountry'])->name('add-country');
   Route::post('admin/add-counties', [AdminController::class, 'addCountryPost'])->name('add-country-post');
+  Route::get('admin/edit-country/{id}', [AdminController::class, 'editCountry'])->name('edit-country');
+  Route::post('admin/edit-country/{id}', [AdminController::class, 'editCountryPost'])->name('edit-country-post');
+  Route::get('admin/delete-country/{id}', [AdminController::class, 'deleteCountry'])->name('delete-country');
 });
