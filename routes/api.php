@@ -8,4 +8,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/pages', [AdminController::class, 'getPages']);
-Route::get('/page/{page_slug}', [AdminController::class, 'getPagesBySlug']);
+Route::get('/page/{page_slug}', [AdminController::class, 'getPagesBySlug'])->where('page_slug', '.*');

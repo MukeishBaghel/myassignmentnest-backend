@@ -83,9 +83,7 @@
                                     <div class="form-group">
                                         <label>Section 1 Content 1</label>
                                         <textarea class="form-control" name="section_1_content_1" rows="3"
-                                            placeholder="Enter ...">
-                                            {{ $page_data->section_1_content_1 }}
-                                        </textarea>
+                                            placeholder="Enter ...">{{ $page_data->section_1_content_1 }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Section 1 Title 2</label>
@@ -96,9 +94,7 @@
                                     <div class="form-group">
                                         <label>Section 1 Content 2</label>
                                         <textarea class="form-control" name="section_1_content_2" rows="3"
-                                            placeholder="Enter ...">
-                                            {{ $page_data->section_1_content_2 }}    
-                                        </textarea>
+                                            placeholder="Enter ...">{{ $page_data->section_1_content_2 }}</textarea>
                                     </div>
                                     <hr />
                                     <div class="form-group">

@@ -18,6 +18,12 @@ class AdminController extends Controller
     ]);
   }
 
+  public function removeSpaces($string)
+  {
+    $cleanedString = str_replace(' ', '', $string);
+    return strtolower($cleanedString);
+  }
+
   function addPagePost(Request $request){
 
     $request->validate([
@@ -39,7 +45,7 @@ class AdminController extends Controller
     Page::create([
       'country_id' => $request->country_id,
       'location' => $request->location,
-      'page_url' => urlencode($request->page_url),
+      'page_url' => $this->removeSpaces($request->page_url),
       'hero_title' => $request->hero_title,
       'hero_sub_title' => $request->hero_sub_title,
       'section_1_title_1' => $request->section_1_title_1,
@@ -57,8 +63,6 @@ class AdminController extends Controller
   function editPage(Request $request, $id) {
     $countries = Country::all();
     $page_data = Page::where('id',$id)->first();
-
-
     return view('super-admin.edit-page')->with([
       'countries'=>$countries,
       'page_data'=>$page_data
@@ -85,7 +89,7 @@ class AdminController extends Controller
 
     $page->country_id = $request->country_id;
     $page->location = $request->location;
-    $page->page_url = urlencode($request->page_url);
+    $page->page_url = $this->removeSpaces($request->page_url);
     $page->hero_title = $request->hero_title;
     $page->hero_sub_title = $request->hero_sub_title;
     $page->section_1_title_1 = $request->section_1_title_1;
@@ -164,7 +168,6 @@ class AdminController extends Controller
 
   function getPagesBySlug(Request $request, $slug){
     $page_data = Page::where('page_url',$slug)->first();
-
     return response()->json([
       'status' => true,
       'data' => $page_data
